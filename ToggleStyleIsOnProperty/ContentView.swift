@@ -34,7 +34,36 @@ struct ToggleStyle_isOn: View {
                 .foregroundColor(.white)
             
             Toggle("", isOn: $toggleState).padding()
+                .toggleStyle(
+                CheckMarkToggleStyle(label: "Check on/off",
+                                     color: .purple))
+            
             Toggle("", isOn: $toggleState).padding()
+                .toggleStyle(
+                CheckMarkToggleStyle(label: "My Checkmark Toggle",
+                                              color: .green))
         }
+    }
+}
+
+struct CheckMarkToggleStyle: ToggleStyle {
+
+    var label = ""
+    var color = Color.primary
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        HStack {
+            Text(label)
+            Spacer()
+            Button(action: { configuration.isOn.toggle() } )
+            {
+                Image(systemName: configuration.isOn
+                    ? "checkmark.square.fill"
+                    : "square.fill")
+                    .foregroundColor(color)
+            }
+        }
+        .font(.title)
+        .padding(.horizontal)
     }
 }
